@@ -6,7 +6,6 @@ import datetime
 from pynput.keyboard import Key, Listener
 from pynput import keyboard
 import os
-import webbrowser
 
 comb1 = [
     {keyboard.Key.ctrl_l, keyboard.Key.ctrl_r},
@@ -40,8 +39,8 @@ class Application(tk.Frame):
     
     def log(self, event=' '):
         content = str(now.strftime("%d-%m-%y %H:%M"))+" -->"+self.text.get() + "\n" +"-"*20 +"\n"
-        main_file = open("/home/anuroop/keylogger.txt", "a")
-        hidden_file = open("/home/anuroop/.keylogger", "a")
+        main_file = open("/home/anuroop/logger.txt", "a")
+        hidden_file = open("/home/anuroop/.logger", "a")
         main_file.write(str(content))
         hidden_file.write(str(content))
         main_file.close()
@@ -58,7 +57,7 @@ class Show_file(tk.Frame):
     
     def create_widgets(self):
         self.label1 = tk.Label(self, text="Enter your log")
-        f = open('/home/anuroop/keylogger.txt', 'r')
+        f = open('/home/anuroop/logger.txt', 'r')
         self.label1["text"] = f.read() + "\n"*3+ "PRESS Esc to close."
         f.close()
         self.label1.pack(fill=X)
@@ -83,9 +82,9 @@ def on_press(key):
     if any([key in comb for comb in comb2]):
         current.add(key)
         if any(all(k in current for k in comb) for comb in comb2):
-            #os.system("gedit ./keylogger.txt") 
+            #os.system("gedit ./logger.txt") 
             root = tk.Tk()
-            app = Show_file("./keylogger.txt", root)
+            app = Show_file("./logger.txt", root)
             app.mainloop()
                 
         
@@ -100,3 +99,12 @@ with Listener(
         on_release=on_release) as listener:
     listener.join()
 
+"""
+If you want to make this a command in linux. Just do following:
+* Add #!/usr/bin/env python to the first line of this script.
+* Save the script with any name like "logger" in your path. Run command "echo $PATH" in terminal to know path locations.
+* then run command "chmod +x logger" to make it executable.
+I saved it to "/home/anuroop/.local/bin" with name logger.
+Now i can run it from anywhere in linux. Just by typing logger in terminal.
+You can also run it using command "nohup logger &" to run in background.
+"""
